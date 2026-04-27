@@ -1,3 +1,5 @@
 //get all useers
 GET http://localhost:5000/api/users
 
+//create a new user
+POST http://localhost:5000/api/users
