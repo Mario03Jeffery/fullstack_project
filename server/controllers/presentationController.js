@@ -57,3 +57,15 @@ exports.deletePresentation = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.getTotalSlides = async (req, res) => {
+  try {
+    const result = await require('../models/slideModel').aggregate([
+      { $group: { _id: '$presentationId', count: { $sum: 1 } } },
+      { $group: { _id: null, totalSlides: { $sum: '$count' } } }
+    ]);
+    res.json({ totalSlides: result[0]?.totalSlides || 0 });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
