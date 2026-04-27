@@ -2,7 +2,9 @@ const Presentation = require('../models/presentationModel');
 
 exports.getAllPresentations = async (req, res) => {
   try {
-    const presentations = await Presentation.find().populate('userId', 'name email');
+    const { user } = req.query;
+    const query = user ? { userId: user } : {};
+    const presentations = await Presentation.find(query).populate('userId', 'name email');
     res.json(presentations);
   } catch (error) {
     res.status(500).json({ message: error.message });
