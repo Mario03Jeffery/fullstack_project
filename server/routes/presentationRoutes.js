@@ -1,6 +1,7 @@
-const express = require('express');
+import express from 'express';
+import * as presentationController from '../controllers/presentationController.js';
+
 const router = express.Router();
-const presentationController = require('../controllers/presentationController');
 
 router.get('/', presentationController.getAllPresentations);
 router.get('/:id', presentationController.getPresentationById);
@@ -9,4 +10,4 @@ router.put('/:id', presentationController.updatePresentation);
 router.delete('/:id', presentationController.deletePresentation);
 router.get('/stats/total-slides', presentationController.getTotalSlides);
 
-module.exports = router;
+export default router;

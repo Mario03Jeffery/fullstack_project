@@ -1,6 +1,7 @@
-const express = require('express');
+import express from 'express';
+import * as slideController from '../controllers/slideController.js';
+
 const router = express.Router();
-const slideController = require('../controllers/slideController');
 
 router.get('/', slideController.getAllSlides);
 router.get('/presentation/:presentationId', slideController.getSlidesByPresentation);
@@ -9,4 +10,4 @@ router.post('/', slideController.createSlide);
 router.put('/:id', slideController.updateSlide);
 router.delete('/:id', slideController.deleteSlide);
 
-module.exports = router;
+export default router;

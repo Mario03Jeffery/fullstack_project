@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const slideSchema = new mongoose.Schema({
   presentationId: {
@@ -31,4 +31,4 @@ const slideSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Slide', slideSchema);
+export default mongoose.model('Slide', slideSchema);

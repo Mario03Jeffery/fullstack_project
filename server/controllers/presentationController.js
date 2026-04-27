@@ -1,6 +1,7 @@
-const Presentation = require('../models/presentationModel');
+import Presentation from '../models/presentationModel.js';
+import Slide from '../models/slideModel.js';
 
-exports.getAllPresentations = async (req, res) => {
+export const getAllPresentations = async (req, res) => {
   try {
     const { user } = req.query;
     const query = user ? { userId: user } : {};
@@ -11,7 +12,7 @@ exports.getAllPresentations = async (req, res) => {
   }
 };
 
-exports.getPresentationById = async (req, res) => {
+export const getPresentationById = async (req, res) => {
   try {
     const presentation = await Presentation.findById(req.params.id).populate('userId', 'name email');
     if (!presentation) return res.status(404).json({ message: 'Presentation not found' });
@@ -21,7 +22,7 @@ exports.getPresentationById = async (req, res) => {
   }
 };
 
-exports.createPresentation = async (req, res) => {
+export const createPresentation = async (req, res) => {
   const { title, description, userId, theme } = req.body;
   if (!title || !userId) {
     return res.status(400).json({ message: 'Title and userId are required' });
@@ -35,7 +36,7 @@ exports.createPresentation = async (req, res) => {
   }
 };
 
-exports.updatePresentation = async (req, res) => {
+export const updatePresentation = async (req, res) => {
   const { title, description, theme } = req.body;
   try {
     const presentation = await Presentation.findByIdAndUpdate(
@@ -50,7 +51,7 @@ exports.updatePresentation = async (req, res) => {
   }
 };
 
-exports.deletePresentation = async (req, res) => {
+export const deletePresentation = async (req, res) => {
   try {
     const presentation = await Presentation.findByIdAndDelete(req.params.id);
     if (!presentation) return res.status(404).json({ message: 'Presentation not found' });
@@ -60,9 +61,9 @@ exports.deletePresentation = async (req, res) => {
   }
 };
 
-exports.getTotalSlides = async (req, res) => {
+export const getTotalSlides = async (req, res) => {
   try {
-    const result = await require('../models/slideModel').aggregate([
+    const result = await Slide.aggregate([
       { $group: { _id: '$presentationId', count: { $sum: 1 } } },
       { $group: { _id: null, totalSlides: { $sum: '$count' } } }
     ]);

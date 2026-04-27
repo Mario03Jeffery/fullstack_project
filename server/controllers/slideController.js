@@ -1,6 +1,6 @@
-const Slide = require('../models/slideModel');
+import Slide from '../models/slideModel.js';
 
-exports.getAllSlides = async (req, res) => {
+export const getAllSlides = async (req, res) => {
   try {
     const slides = await Slide.find().populate('presentationId', 'title');
     res.json(slides);
@@ -9,7 +9,7 @@ exports.getAllSlides = async (req, res) => {
   }
 };
 
-exports.getSlidesByPresentation = async (req, res) => {
+export const getSlidesByPresentation = async (req, res) => {
   try {
     const slides = await Slide.find({ presentationId: req.params.presentationId }).sort('order');
     res.json(slides);
@@ -18,7 +18,7 @@ exports.getSlidesByPresentation = async (req, res) => {
   }
 };
 
-exports.getSlideById = async (req, res) => {
+export const getSlideById = async (req, res) => {
   try {
     const slide = await Slide.findById(req.params.id).populate('presentationId', 'title');
     if (!slide) return res.status(404).json({ message: 'Slide not found' });
@@ -28,7 +28,7 @@ exports.getSlideById = async (req, res) => {
   }
 };
 
-exports.createSlide = async (req, res) => {
+export const createSlide = async (req, res) => {
   const { presentationId, title, content, contentType, order } = req.body;
   if (!presentationId || !title || !content || !order) {
     return res.status(400).json({ message: 'presentationId, title, content, and order are required' });
@@ -42,7 +42,7 @@ exports.createSlide = async (req, res) => {
   }
 };
 
-exports.updateSlide = async (req, res) => {
+export const updateSlide = async (req, res) => {
   const { title, content, contentType, order } = req.body;
   try {
     const slide = await Slide.findByIdAndUpdate(
@@ -57,7 +57,7 @@ exports.updateSlide = async (req, res) => {
   }
 };
 
-exports.deleteSlide = async (req, res) => {
+export const deleteSlide = async (req, res) => {
   try {
     const slide = await Slide.findByIdAndDelete(req.params.id);
     if (!slide) return res.status(404).json({ message: 'Slide not found' });

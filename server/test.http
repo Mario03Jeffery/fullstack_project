@@ -1,0 +1,3 @@
+//get all useers
+GET http://localhost:5000/api/users
+

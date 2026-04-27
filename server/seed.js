@@ -1,8 +1,11 @@
-require('dotenv').config();
-const mongoose = require('mongoose');
-const User = require('./models/userModel');
-const Presentation = require('./models/presentationModel');
-const Slide = require('./models/slideModel');
+
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+import User from './models/userModel.js';
+import Presentation from './models/presentationModel.js';
+import Slide from './models/slideModel.js';
+
+dotenv.config();
 
 const seedData = async () => {
   try {
